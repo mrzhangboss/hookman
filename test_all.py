@@ -30,6 +30,13 @@ class RuningTest(unittest.TestCase):
 
 from hookman.weblistener import app
 class AppHookmanTest(unittest.TestCase):
+    def setUp(self):
+        self.client = app.test_client()
+
+    def tearDown(self):
+        pass
+
+
     def test_hookman_allow_get(self):
         res = app.test_client().get('/')
         self.assertEqual(res.status_code, 405)
