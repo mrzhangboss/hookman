@@ -28,6 +28,12 @@ class RuningTest(unittest.TestCase):
         start_run = subprocess.getoutput('hookman --run')
         self.assertEqual('listen :3610, hookman run!!!', start_run)
 
+from hookman.weblistener import app
+class AppHookmanTest(unittest.TestCase):
+    def test_hookman_can_listen(self):
+        res = app.test_client().get('/')
+        self.assertEqual(res.status_code, 200)
+
 
 
 
