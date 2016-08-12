@@ -5,6 +5,6 @@ from flask import Flask, Response, Request, request
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['POST'])
 def home():
     return Response()
