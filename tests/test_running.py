@@ -26,7 +26,6 @@ class RuningTest(unittest.TestCase):
         self.assertIn('--version', help_text)
         self.assertIn('--stop', help_text)
         self.assertIn('--run', help_text)
-        self.assertIn('--restart', help_text)
 
         # he try -v
         version_info = subprocess.getoutput('hookman --version')
