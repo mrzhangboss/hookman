@@ -4,3 +4,4 @@ __pycache__
 build
 dist
 hookman.egg-info
+log.txt
