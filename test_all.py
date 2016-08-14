@@ -11,6 +11,7 @@ class RuningTest(unittest.TestCase):
         # jack install the *hookman* by pip
         # he run his cmd
         help_text = subprocess.getoutput('hookman')
+        
 
         # help list
         self.assertIn('-h', help_text)
