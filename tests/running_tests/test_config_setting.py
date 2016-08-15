@@ -5,6 +5,7 @@ import subprocess
 
 class FileSettingTest(unittest.TestCase):
     def setUp(self):
+        self.maxDiff = None
         subprocess.getoutput('hookman --stop --pidfile ~/my.pid')
 
     def tearDown(self):
@@ -19,3 +20,20 @@ class FileSettingTest(unittest.TestCase):
         pid_real_file = expanduser('~/my.pid')
         self.run_cmd('hookman --run -d --pidfile ~/my.pid',
                      'hookman running background\npidfile={}'.format(pid_real_file))
+    def test_run_as_set_pid_file_and_projectdir(self):
+        from os.path import expanduser
+        from os.path import abspath
+        pid_real_file = expanduser('~/my.pid')
+        dir_real_file = abspath('.')
+        self.run_cmd('hookman --run -d --pidfile ~/my.pid --projectdir .',
+                     'hookman running background\npidfile={}\nprojectdir={}'.format(pid_real_file,
+                                                                                    dir_real_file))
+
+    def test_run_as_set_pid_file_and_logging_file(self):
+        from os.path import expanduser
+        pid_real_file = expanduser('~/my.pid')
+        log_real_file = expanduser('~/my.log')
+        self.run_cmd('hookman --run -d --pidfile ~/my.pid --logfile ~/my.log',
+                     'hookman running background\npidfile={}\nlogfile={}'.format(pid_real_file,
+                                                                                 log_real_file))
+

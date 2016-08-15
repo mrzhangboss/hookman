@@ -48,6 +48,13 @@ def manage(args):
             print('hookman running background')
             if args.pidfile:
                 print('pidfile={}'.format(args.pidfile))
+            if args.logfile:
+                print('logfile={}'.format(args.logfile))
+            if args.projectdir:
+                from os.path import abspath
+                print('projectdir={}'.format(abspath(args.projectdir)))
+
+
         else:
             try:
                 while True:
@@ -71,7 +78,17 @@ def manage(args):
         else:
             print('hookman not running!!!')
 
-
+def change_settings(args):
+    if args.pidfile or args.logfile or args.projectdir:
+        if args.pidfile:
+            global PID_FILE
+            PID_FILE = args.pidfile
+        if args.logfile:
+            global ERROR_LOG
+            ERROR_LOG = args.logfile
+        if args.projectdir:
+            global PROJECT_DIR
+            PROJECT_DIR = args.projectdir
 
 def parse_args():
     if len(sys.argv) == 1:
@@ -83,10 +100,10 @@ def parse_args():
     parse.add_argument('-r', '--run', action='store_true', help='show help text')
     parse.add_argument('-d', '--daemon',action='store_true', help='running in background')
     parse.add_argument('--pidfile', dest='pidfile', type=str, help='set your pid file')
+    parse.add_argument('--logfile', dest='logfile', type=str, help='set your log file')
+    parse.add_argument('--projectdir', dest='projectdir', type=str, help='set your projectdir(default is <.>)')
     args = parse.parse_args()
-    if args.pidfile:
-        global PID_FILE
-        PID_FILE= args.pidfile
+    change_settings(args)
     manage(args)
 
 
