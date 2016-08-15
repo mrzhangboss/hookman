@@ -12,7 +12,6 @@ class RuningTest(unittest.TestCase):
     def tearDown(self):
         subprocess.getoutput('hookman --stop')
 
-
     def test_run(self):
         self.maxDiff = None
         # begin test
@@ -26,6 +25,7 @@ class RuningTest(unittest.TestCase):
         self.assertIn('--version', help_text)
         self.assertIn('--stop', help_text)
         self.assertIn('--run', help_text)
+        self.assertIn('--pidfile', help_text)
 
         # he try -v
         version_info = subprocess.getoutput('hookman --version')

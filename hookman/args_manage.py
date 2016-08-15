@@ -7,6 +7,11 @@ import logging
 import argparse
 from .settings import *
 
+logging.basicConfig(filename=ERROR_LOG,
+                    filemode='a+',
+                    level=LOG_LEVER,
+                    format='%(asctime)-15s %(message)s')
+
 def is_alive(pid):
     try:
         os.kill(pid, 0)
@@ -35,13 +40,14 @@ def manage(args):
         popen = subprocess.Popen(['python', '/home/zhanglun/hookman/hookman/weblistener.py'],
                                  stderr=error_file,
                                  stdout=error_file,)
-
-                                 # preexec_fn=os.setsid)
         logging.info('PID: {}'.format(popen.pid))
         pid_file.write(str(popen.pid))
         pid_file.close()
+        # todo: separate the args and output
         if args.daemon:
             print('hookman running background')
+            if args.pidfile:
+                print('pidfile={}'.format(args.pidfile))
         else:
             try:
                 while True:
@@ -76,7 +82,11 @@ def parse_args():
     parse.add_argument('-s', '--stop', action='store_true', help='stop running')
     parse.add_argument('-r', '--run', action='store_true', help='show help text')
     parse.add_argument('-d', '--daemon',action='store_true', help='running in background')
+    parse.add_argument('--pidfile', dest='pidfile', type=str, help='set your pid file')
     args = parse.parse_args()
+    if args.pidfile:
+        global PID_FILE
+        PID_FILE= args.pidfile
     manage(args)
 
 
