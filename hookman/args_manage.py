@@ -22,7 +22,7 @@ def is_alive(pid):
 
 def manage(args):
     if args.daemon == True:
-        error_file = open(ERROR_LOG, mode='w')
+        error_file = open(ERROR_LOG, mode='a')
     else:
         error_file = subprocess.PIPE
 
@@ -37,10 +37,12 @@ def manage(args):
             else:
                 os.remove(PID_FILE)
         pid_file = open(PID_FILE, mode='w')
-        popen = subprocess.Popen(['python', '/home/zhanglun/hookman/hookman/weblistener.py'],
+        # do: use the lib path
+        popen = subprocess.Popen(['python', WEB_LISTENER_PATH],
                                  stderr=error_file,
                                  stdout=error_file,)
         logging.info('PID: {}'.format(popen.pid))
+        logging.info('weblistener path: {}'.format(WEB_LISTENER_PATH))
         pid_file.write(str(popen.pid))
         pid_file.close()
         # todo: separate the args and output
@@ -51,13 +53,13 @@ def manage(args):
             if args.logfile:
                 print('logfile={}'.format(args.logfile))
             if args.projectdir:
-                from os.path import abspath
-                print('projectdir={}'.format(abspath(args.projectdir)))
+                print('projectdir={}'.format(PROJECT_DIR))
 
 
         else:
             try:
                 while True:
+                    # todo: debug print b'xxx' to stdout
                     print(popen.stderr.readline())
             finally:
                 popen.kill()
@@ -79,6 +81,7 @@ def manage(args):
             print('hookman not running!!!')
 
 def change_settings(args):
+    from os.path import abspath
     if args.pidfile or args.logfile or args.projectdir:
         if args.pidfile:
             global PID_FILE
@@ -86,9 +89,12 @@ def change_settings(args):
         if args.logfile:
             global ERROR_LOG
             ERROR_LOG = args.logfile
+        global PROJECT_DIR
         if args.projectdir:
-            global PROJECT_DIR
-            PROJECT_DIR = args.projectdir
+            PROJECT_DIR = abspath(args.projectdir)
+        else:
+            PROJECT_DIR = abspath(PROJECT_DIR)
+
 
 def parse_args():
     if len(sys.argv) == 1:

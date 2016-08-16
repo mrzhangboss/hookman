@@ -1,9 +1,11 @@
 # -*- coding:utf-8 -*-
-# from __future__ import absolute_import, unicode_literals, print_function
+from __future__ import absolute_import, unicode_literals, print_function
 import logging
-
+from os.path import abspath, dirname, join
 PID_FILE = u'/home/zhanglun/hookman.pid'
 BASE_PID_FILE = u'/home/zhanglun/hookman.pid'
 ERROR_LOG = u'/home/zhanglun/hookman.log'
 PROJECT_DIR = u'.'
 LOG_LEVER = logging.DEBUG
+BASE_PROJECT_DIR = dirname(abspath(__file__))
+WEB_LISTENER_PATH = join(BASE_PROJECT_DIR, 'weblistener.py')
