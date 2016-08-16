@@ -4,11 +4,21 @@
 
 you just need run as a command in Linux
 
+## first
 
-list
+    pip install hookman
 
-    hookman start
+## second
+cd your github project and run 
+
+    hookman --run -d
+    
+it will run in background
+
+also you can set your `projectdir` like
+
+    hookman --run -d --projectdir /my/github/project
 
 
 
-use apache LICENSE  
+use Apache LICENSE  
