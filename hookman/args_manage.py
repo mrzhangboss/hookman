@@ -38,7 +38,7 @@ def manage(args):
                 os.remove(PID_FILE)
         pid_file = open(PID_FILE, mode='w')
         # do: use the lib path
-        popen = subprocess.Popen(['python', WEB_LISTENER_PATH],
+        popen = subprocess.Popen(['python', WEB_LISTENER_PATH, PROJECT_DIR],
                                  stderr=error_file,
                                  stdout=error_file,)
         logging.info('PID: {}'.format(popen.pid))
@@ -81,7 +81,7 @@ def manage(args):
             print('hookman not running!!!')
 
 def change_settings(args):
-    from os.path import abspath
+    from os.path import abspath, isdir
     if args.pidfile or args.logfile or args.projectdir:
         if args.pidfile:
             global PID_FILE
@@ -91,7 +91,10 @@ def change_settings(args):
             ERROR_LOG = args.logfile
         global PROJECT_DIR
         if args.projectdir:
-            PROJECT_DIR = abspath(args.projectdir)
+            if isdir(args.projectdir):
+                PROJECT_DIR = abspath(args.projectdir)
+            else:
+                raise TypeError('{} not a dir'.format(args.projectdir))
         else:
             PROJECT_DIR = abspath(PROJECT_DIR)
 

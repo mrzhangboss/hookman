@@ -45,11 +45,11 @@ class RuningTest(unittest.TestCase):
         # he try ping
         result = subprocess.getoutput('curl -X POST --header "X-GitHub-Event: ping" http://localhost:3610/')
 
+        ## he expect a pong back
         self.assertIn('pong', result)
 
-        # he try push
-        result = subprocess.getoutput('curl -X POST --header "X-GitHub-Event: push" http://localhost:3610/')
-        self.assertIn('hookman-0.1.0 get', result)
+
+
 
 
 

@@ -12,8 +12,8 @@ class FileSettingTest(unittest.TestCase):
         subprocess.getoutput('hookman --stop --pidfile ~/my.pid')
 
     def run_cmd(self, cmd, expect_text):
-        true_text = subprocess.getoutput(cmd)
-        self.assertEqual(true_text, expect_text)
+        real_text = subprocess.getoutput(cmd)
+        self.assertEqual(real_text, expect_text)
 
     def test_run_as_set_pid_file(self):
         from os.path import expanduser
@@ -28,6 +28,9 @@ class FileSettingTest(unittest.TestCase):
         self.run_cmd('hookman --run -d --pidfile ~/my.pid --projectdir .',
                      'hookman running background\npidfile={}\nprojectdir={}'.format(pid_real_file,
                                                                                     dir_real_file))
+    def test_set_a_file_to_projectdir(self):
+        error_text = subprocess.getoutput('hookman --run -d --pidfile ~/my.pid --projectdir LICENSE')
+        self.assertIn('LICENSE not a dir', error_text)
 
     def test_run_as_set_pid_file_and_logging_file(self):
         from os.path import expanduser
