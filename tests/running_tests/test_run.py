@@ -12,6 +12,7 @@ class RuningTest(unittest.TestCase):
     def tearDown(self):
         subprocess.getoutput('hookman --stop')
 
+class MulutiRuningTest(RuningTest):
     def test_run(self):
         self.maxDiff = None
         # begin test
@@ -39,7 +40,7 @@ class RuningTest(unittest.TestCase):
         start_run = subprocess.getoutput('hookman --run -d')
         self.assertEqual('hookman running background', start_run)
         import time
-        time.sleep(1)
+        time.sleep(2)
 
         ## he do a little test
         # he try ping

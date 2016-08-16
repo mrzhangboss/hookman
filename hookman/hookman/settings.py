@@ -8,4 +8,4 @@ ERROR_LOG = u'/home/zhanglun/hookman.log'
 PROJECT_DIR = u'.'
 LOG_LEVER = logging.DEBUG
 BASE_PROJECT_DIR = dirname(abspath(__file__))
-WEB_LISTENER_PATH = join(BASE_PROJECT_DIR, 'weblistener.py')
+WEB_LISTENER_PATH = join(BASE_PROJECT_DIR, 'webs', 'weblistener.py')

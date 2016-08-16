@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from __future__ import absolute_import, unicode_literals, print_function
-from . import args_manage
+from .hookman import args_manage
 
 
 def main():

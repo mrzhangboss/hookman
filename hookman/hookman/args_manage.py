@@ -38,6 +38,7 @@ def manage(args):
                 os.remove(PID_FILE)
         pid_file = open(PID_FILE, mode='w')
         # do: use the lib path
+        # todo: add more optic choose
         popen = subprocess.Popen(['python', WEB_LISTENER_PATH, PROJECT_DIR],
                                  stderr=error_file,
                                  stdout=error_file,)
@@ -60,7 +61,9 @@ def manage(args):
             try:
                 while True:
                     # todo: debug print b'xxx' to stdout
-                    print(popen.stderr.readline())
+                    line = popen.stderr.readline()
+                    if line:
+                        print(line)
             finally:
                 popen.kill()
 

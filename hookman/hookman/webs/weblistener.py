@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals, print_function
 import time
 from flask import Flask, Response, Request, request
+from hookman.hookman.webs.event_tasks  import run_work
 
 app = Flask(__name__)
 PROJECT_DIR = './'
@@ -13,10 +14,7 @@ def home():
     if event == 'ping':
         return Response('pong')
     if event == 'push':
-        from os.path import join
-        f = open(join(PROJECT_DIR, 'date'), 'w')
-
-        f.write(str(time.time()))
+        run_work(projectdir=PROJECT_DIR)
         return Response('hookman-0.1.0 get')
 
 

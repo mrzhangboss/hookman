@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals, print_function
 import unittest
 import subprocess
-from hookman.weblistener import app
+from hookman.hookman.webs.weblistener import app
 from flask import Request
 
 
