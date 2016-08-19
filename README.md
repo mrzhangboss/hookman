@@ -21,4 +21,17 @@ also you can set your `projectdir` like
 
 
 
+
+####setting
+
+pidfile=~/hookman.pid
+logfile=~/hookman.log
+
+####blog
+
+you can go to our [blog](http://blog.zhanglun.me/2016/08/18/hookman-development-notebook/) to know how to contribute your code.
+
+######Develped by TDD
+> you can test it just use `py.test .`
+
 use Apache LICENSE  
