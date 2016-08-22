@@ -5,11 +5,13 @@ import sys
 import subprocess
 import logging
 import argparse
-from .settings import *
+# from .settings import *
+from . import settings
 
-logging.basicConfig(filename=ERROR_LOG,
+# todo: delete SyntaxWarning
+logging.basicConfig(filename=settings.ERROR_LOG,
                     filemode='a+',
-                    level=LOG_LEVER,
+                    level=settings.LOG_LEVER,
                     format='%(asctime)-15s %(message)s')
 
 def is_alive(pid):
@@ -22,28 +24,31 @@ def is_alive(pid):
 
 def manage(args):
     if args.daemon == True:
-        error_file = open(ERROR_LOG, mode='a')
+        error_file = open(settings.ERROR_LOG, mode='a')
+        input_stream = subprocess.PIPE
     else:
         error_file = subprocess.PIPE
+        input_stream = sys.stdin
 
     # todo: lighter complex logic
     if args.run:
-        if os.path.exists(PID_FILE):
-            pid = open(PID_FILE).read()
+        if os.path.exists(settings.PID_FILE):
+            pid = open(settings.PID_FILE).read()
             pid = int(pid)
             if is_alive(pid):
                 print('hookman already run')
                 return
             else:
-                os.remove(PID_FILE)
-        pid_file = open(PID_FILE, mode='w')
+                os.remove(settings.PID_FILE)
+        pid_file = open(settings.PID_FILE, mode='w')
         # do: use the lib path
         # todo: add more optic choose
-        popen = subprocess.Popen(['python', WEB_LISTENER_PATH, PROJECT_DIR],
+        popen = subprocess.Popen(['python', settings.WEB_LISTENER_PATH, settings.PROJECT_DIR],
                                  stderr=error_file,
-                                 stdout=error_file,)
+                                 stdout=error_file,
+                                 stdin=input_stream)
         logging.info('PID: {}'.format(popen.pid))
-        logging.info('weblistener path: {}'.format(WEB_LISTENER_PATH))
+        logging.info('weblistener path: {}'.format(settings.WEB_LISTENER_PATH))
         pid_file.write(str(popen.pid))
         pid_file.close()
         # todo: separate the args and output
@@ -54,23 +59,25 @@ def manage(args):
             if args.logfile:
                 print('logfile={}'.format(args.logfile))
             if args.projectdir:
-                print('projectdir={}'.format(PROJECT_DIR))
+                print('projectdir={}'.format(settings.PROJECT_DIR))
 
 
         else:
             try:
                 while True:
-                    # todo: debug print b'xxx' to stdout
+                    # do: debug print b'xxx' to stdout change to unicode
+                    # do: can stop by `ctrl + c`
                     line = popen.stderr.readline()
                     if line:
-                        print(line)
+                        print(line.decode('utf-8'))
             finally:
                 popen.kill()
+                return 'End'
 
 
     elif args.stop == True:
-        if os.path.exists(PID_FILE):
-            pid = open(PID_FILE).read()
+        if os.path.exists(settings.PID_FILE):
+            pid = open(settings.PID_FILE).read()
             pid = int(pid)
             if is_alive(pid):
                 os.kill(pid, 9)
@@ -78,7 +85,7 @@ def manage(args):
             else:
                 print('hookman not running!!!')
             logging.error('delete pid file')
-            os.remove(PID_FILE)
+            os.remove(settings.PID_FILE)
 
         else:
             print('hookman not running!!!')
@@ -87,19 +94,19 @@ def change_settings(args):
     from os.path import abspath, isdir
     if args.pidfile or args.logfile or args.projectdir:
         if args.pidfile:
-            global PID_FILE
-            PID_FILE = args.pidfile
+            # global PID_FILE
+            settings.PID_FILE = args.pidfile
         if args.logfile:
-            global ERROR_LOG
-            ERROR_LOG = args.logfile
-        global PROJECT_DIR
+            # global ERROR_LOG
+            settings.ERROR_LOG = args.logfile
+        # global PROJECT_DIR
         if args.projectdir:
             if isdir(args.projectdir):
-                PROJECT_DIR = abspath(args.projectdir)
+                settings.PROJECT_DIR = abspath(args.projectdir)
             else:
                 raise TypeError('{} not a dir'.format(args.projectdir))
         else:
-            PROJECT_DIR = abspath(PROJECT_DIR)
+            settings.PROJECT_DIR = abspath(settings.PROJECT_DIR)
 
 
 def parse_args():
