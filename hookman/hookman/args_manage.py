@@ -114,7 +114,7 @@ def parse_args():
         sys.argv.append('--help')
     parse = argparse.ArgumentParser()
     # do: complete help text
-    parse.add_argument('--version', action='version', version='0.1.0')
+    parse.add_argument('--version', action='version', version='0.1.1')
     parse.add_argument('-s', '--stop', action='store_true', help='stop running')
     parse.add_argument('-r', '--run', action='store_true', help='show help text')
     parse.add_argument('-d', '--daemon',action='store_true', help='running in background')
