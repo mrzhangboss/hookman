@@ -21,6 +21,6 @@ def home():
 if __name__ == '__main__':
     import sys
     if len(sys.argv) > 1:
-        global PROJECT_DIR
+        # global PROJECT_DIR
         PROJECT_DIR = sys.argv[1]
     app.run(host='0.0.0.0', port=3610)
