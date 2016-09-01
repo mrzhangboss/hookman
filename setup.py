@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 # todo: add install_requires and test_requires
 setup(name='hookman',
-      version='0.1.1',
+      version='0.1.2',
       packages=find_packages(),
       test_requires = ['py.test>=2.92'],
       install_requires = ['flask>=0.6.0'],
