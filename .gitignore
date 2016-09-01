@@ -6,3 +6,4 @@ dist
 hookman.egg-info
 log.txt
 *.pyc
+date
