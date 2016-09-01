@@ -33,5 +33,6 @@ you can go to our [blog](http://blog.zhanglun.me/2016/08/18/hookman-development-
 
 ######Develped by TDD
 > you can test it just use `py.test .`
+> latest version "0.1.2"
 
 use Apache LICENSE  
