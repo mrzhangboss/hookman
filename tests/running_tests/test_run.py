@@ -33,7 +33,7 @@ class MulutiRuningTest(RuningTest):
         # he try -v
         version_info = subprocess.getoutput('hookman --version')
 
-        self.assertEqual('0.1.0', version_info)
+        self.assertEqual('0.1.1', version_info)
 
         # he let it run
 
