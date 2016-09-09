@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
 from __future__ import absolute_import, unicode_literals, print_function
 import unittest
-from unittest.mock import Mock, patch
+try:
+    from unittest.mock import Mock, patch
+except:
+    from mock import Mock, patch
 import subprocess
 from hookman.hookman.webs.weblistener import app
 from hookman.hookman.webs.weblistener import home

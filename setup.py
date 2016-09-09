@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 setup(name='hookman',
       version='0.1.2',
       packages=find_packages(),
-      test_requires = ['py.test>=2.92'],
+      test_requires = ['py.test>=2.92', 'mock'],
       install_requires = ['flask>=0.6.0'],
       entry_points={
     'console_scripts': ['hookman = hookman.manage:main']
