@@ -9,3 +9,4 @@ log.txt
 date
 .tox/*
 *.xml
+.coverage
